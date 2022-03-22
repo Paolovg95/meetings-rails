@@ -1,8 +1,6 @@
 class MeetingsController < ApplicationController
 
   def index
-  end
-
-  def show
+    @meetings = Meeting.all
   end
 end
