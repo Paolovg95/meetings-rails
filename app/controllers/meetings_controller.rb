@@ -1,6 +1,7 @@
 class MeetingsController < ApplicationController
 
   def index
+    @users = User.all
     @meetings = Meeting.all
   end
 
