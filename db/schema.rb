@@ -10,15 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_22_142831) do
+ActiveRecord::Schema.define(version: 2022_03_23_113238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "meetings", force: :cascade do |t|
-    t.integer "hour"
+  create_table "meeting_slots", force: :cascade do |t|
+    t.time "start_time"
+    t.integer "length"
     t.string "day"
-    t.string "description"
+    t.text "description"
+    t.bigint "meeting_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["meeting_id"], name: "index_meeting_slots_on_meeting_id"
+  end
+
+  create_table "meetings", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -37,5 +45,6 @@ ActiveRecord::Schema.define(version: 2022_03_22_142831) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "meeting_slots", "meetings"
   add_foreign_key "meetings", "users"
 end
